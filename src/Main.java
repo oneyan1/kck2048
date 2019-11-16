@@ -15,6 +15,7 @@
 //import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 //import com.googlecode.lanterna.terminal.Terminal;
 //import com.googlecode.lanterna.terminal.TerminalSize;
+import graphics.Graphic;
 import logic.*;
 
 import java.util.Random;
@@ -28,6 +29,7 @@ public class Main {
     private static boolean endGame = false; // wskaznika na koniec gry
     private static Field gameField; // pole gry
     private static Direction direction; // wskazniak przycisku
+    private static Graphic graphic;
 
     private static void initFields(){
         gameField = new Field();
@@ -57,11 +59,12 @@ public class Main {
                     if(currentY+1 < COUNT_CELL_Y) currentY++;
                     else currentY = 0;
                 }
+                if(currentX == randomX && currentY == randomY){
+                    System.err.println("Failed create new cell");
+                    System.exit(-1);
+                }
             }
-            if(currentX == randomX && currentY == randomY){
-                System.err.println("Failed create new cell");
-                System.exit(-1);
-            }
+
         }
         score += state;
 
@@ -95,8 +98,9 @@ public class Main {
         createInitialCell(); // tworzenie nowych punktów pola
 
         while(!endGame){
-//            input();
-//            logic();
+            //input();
+            //logic();
+            graphic.draw(gameField);
         }
 
 
