@@ -22,4 +22,9 @@ public class Field {
     public void setStateCell(int i, int j, int state) {
         gameField[i][j] = state;
     }
+
+
+    public String toStringCell(int i, int j) {
+        return String.valueOf(gameField[i][j]);
+    }
 }

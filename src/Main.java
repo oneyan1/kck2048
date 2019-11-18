@@ -16,6 +16,7 @@
 //import com.googlecode.lanterna.terminal.Terminal;
 //import com.googlecode.lanterna.terminal.TerminalSize;
 import graphics.Graphic;
+import graphics.GraphicConsole;
 import logic.*;
 
 import java.util.Random;
@@ -29,7 +30,7 @@ public class Main {
     private static boolean endGame = false; // wskaznika na koniec gry
     private static Field gameField; // pole gry
     private static Direction direction; // wskazniak przycisku
-    private static Graphic graphic;
+    private static Graphic graphic = new GraphicConsole();
 
     private static void initFields(){
         gameField = new Field();
