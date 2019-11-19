@@ -18,6 +18,7 @@
 import graphics.Graphic;
 import graphics.GraphicConsole;
 import keyboard.KeyboardHundle;
+import keyboard.KeyboardHundleConsole;
 import logic.*;
 
 import java.util.Random;
@@ -44,7 +45,9 @@ public class Main {
         score = 0;
         endGame = false;
         graphic = new GraphicConsole();
+        keyboard = new KeyboardHundleConsole();
         gameField = new Field();
+
     }
     //tworzy nowe komurki na starcie gry
     private static void createInitialCell(){
@@ -86,6 +89,7 @@ public class Main {
     private static void input(){
         graphic.draw(gameField);
         direction = graphic.getKeyPressed();
+        //direction = keyboard.update(key);
     }
 
     private static void logic(){

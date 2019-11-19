@@ -1,5 +1,7 @@
 package keyboard;
 
+import com.googlecode.lanterna.input.Key;
+
 public interface KeyboardHundle {
-    void update(); //czytanie posczegolnych wcisnienc klawisza
+    void update(Key key); //czytanie posczegolnych wcisnienc klawisza
 }

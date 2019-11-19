@@ -95,38 +95,48 @@ public class GraphicConsole implements Graphic {
 //        guiScreen.showWindow(window, GUIScreen.Position.CENTER);
         keyPressed = Direction.WAITING;
         guiScreen.getScreen().startScreen();
+        guiScreen.getScreen().putString(33, 8, "_________________________", Terminal.Color.WHITE, Terminal.Color.BLACK);
+        for (int i = 9; i < 20 ; i++) {
+            guiScreen.getScreen().putString(32, i, "|", Terminal.Color.WHITE, Terminal.Color.BLACK);
+        }
+        for (int i = 9; i < 20; i++) {
+            guiScreen.getScreen().putString(57, i, "|", Terminal.Color.WHITE, Terminal.Color.BLACK);
+        }
+        guiScreen.getScreen().putString(33, 19, "________________________", Terminal.Color.WHITE, Terminal.Color.BLACK);
+
         guiScreen.getScreen().putString(35, 10 , field.toStringCell(0,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(35, 12 , field.toStringCell(0,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(35, 14 , field.toStringCell(0,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(35, 16 , field.toStringCell(0,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(35, 18 , field.toStringCell(0,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(35, 12 , field.toStringCell(1,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(35, 14 , field.toStringCell(2,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(35, 16 , field.toStringCell(3,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(35, 18 , field.toStringCell(4,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
 
-        guiScreen.getScreen().putString(40, 10 , field.toStringCell(1,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(40, 10 , field.toStringCell(0,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
         guiScreen.getScreen().putString(40, 12 , field.toStringCell(1,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(40, 14 , field.toStringCell(1,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(40, 16 , field.toStringCell(1,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(40, 18 , field.toStringCell(1,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(40, 14 , field.toStringCell(2,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(40, 16 , field.toStringCell(3,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(40, 18 , field.toStringCell(4,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
 
-        guiScreen.getScreen().putString(45, 10 , field.toStringCell(2,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(45, 12 , field.toStringCell(2,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(45, 10 , field.toStringCell(0,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(45, 12 , field.toStringCell(1,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
         guiScreen.getScreen().putString(45, 14 , field.toStringCell(2,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(45, 16 , field.toStringCell(2,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(45, 18 , field.toStringCell(2,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(45, 16 , field.toStringCell(3,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(45, 18 , field.toStringCell(4,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
 
-        guiScreen.getScreen().putString(50, 10 , field.toStringCell(3,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(50, 12 , field.toStringCell(3,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(50, 14 , field.toStringCell(3,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(50, 10 , field.toStringCell(0,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(50, 12 , field.toStringCell(1,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(50, 14 , field.toStringCell(2,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
         guiScreen.getScreen().putString(50, 16 , field.toStringCell(3,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(50, 18 , field.toStringCell(3,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(50, 18 , field.toStringCell(4,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
 
-        guiScreen.getScreen().putString(55, 10 , field.toStringCell(4,0), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(55, 12 , field.toStringCell(4,1), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(55, 14 , field.toStringCell(4,2), Terminal.Color.WHITE, Terminal.Color.BLACK);
-        guiScreen.getScreen().putString(55, 16 , field.toStringCell(4,3), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(55, 10 , field.toStringCell(0,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(55, 12 , field.toStringCell(1,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(55, 14 , field.toStringCell(2,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
+        guiScreen.getScreen().putString(55, 16 , field.toStringCell(3,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
         guiScreen.getScreen().putString(55, 18 , field.toStringCell(4,4), Terminal.Color.WHITE, Terminal.Color.BLACK);
         guiScreen.getScreen().refresh();
         boolean keepRunning = true;
         while(keepRunning){
+
             Key key = guiScreen.getScreen().readInput();
             while(key == null){
                 key = guiScreen.getScreen().readInput();
@@ -137,15 +147,23 @@ public class GraphicConsole implements Graphic {
             switch(key.getKind()){
                 case ArrowUp:
                     keyPressed = Direction.UP;
+                    guiScreen.getScreen().refresh();
+                    keepRunning = false;
                     break;
                 case ArrowDown:
                     keyPressed = Direction.DOWN;
+                    guiScreen.getScreen().refresh();
+                    keepRunning = false;
                     break;
                 case ArrowLeft:
                     keyPressed = Direction.LEFT;
+                    guiScreen.getScreen().refresh();
+                    keepRunning = false;
                     break;
                 case ArrowRight:
                     keyPressed = Direction.RIGHT;
+                    guiScreen.getScreen().refresh();
+                    keepRunning = false;
                     break;
                 case Escape:
                     guiScreen.getScreen().stopScreen();
@@ -184,9 +202,6 @@ public class GraphicConsole implements Graphic {
 
 
         //guiScreen.getScreen().stopScreen();
-
-
-
 
     }
 
