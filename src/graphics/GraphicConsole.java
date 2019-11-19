@@ -14,19 +14,27 @@ import com.googlecode.lanterna.gui.component.Panel.Orientation;
 import com.googlecode.lanterna.gui.component.Table;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 import com.googlecode.lanterna.gui.layout.VerticalLayout;
+import com.googlecode.lanterna.input.InputDecoder;
+import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalSize;
+import javafx.beans.binding.BooleanExpression;
 import logic.Field;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
 
+import static java.lang.Thread.*;
 
 
 public class GraphicConsole implements Graphic {
     @Override
-    public void draw(Field field) {
+    public void draw(Field field){
         final GUIScreen guiScreen = TerminalFacade.createGUIScreen();
         final Window window = new Window("2048");
         window.setWindowSizeOverride(new TerminalSize(25,15));
@@ -76,6 +84,9 @@ public class GraphicConsole implements Graphic {
         table.addRow(row5);
         window.addComponent(table, LinearLayout.GROWS_HORIZONTALLY);
 
+
+
+//
 //        Panel panelHolder = new Panel("Menu", Orientation.VERTICAL);
 //        window.addComponent(panelHolder);
 //        window.addComponent(new EmptySpace());
@@ -106,6 +117,10 @@ public class GraphicConsole implements Graphic {
         guiScreen.getScreen().startScreen();
         guiScreen.showWindow(window, GUIScreen.Position.CENTER);
         guiScreen.getScreen().stopScreen();
+
+
+
+
     }
 
     @Override

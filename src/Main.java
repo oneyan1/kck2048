@@ -17,6 +17,7 @@
 //import com.googlecode.lanterna.terminal.TerminalSize;
 import graphics.Graphic;
 import graphics.GraphicConsole;
+import keyboard.KeyboardHundle;
 import logic.*;
 
 import java.util.Random;
@@ -37,6 +38,7 @@ public class Main {
     private static Field gameField; // pole gry
     private static Direction direction; // wskazniak przycisku
     private static Graphic graphic ; //tworzenie nowego interface tekstowego
+    private static KeyboardHundle keyboard;
 
     private static void initFields(){
         score = 0;
