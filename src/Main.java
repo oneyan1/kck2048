@@ -37,7 +37,7 @@ public class Main {
     private static boolean endGame; // wskaznika na koniec gry
     private static Field gameField; // pole gry
     private static Direction direction; // wskazniak przycisku
-    private static Graphic graphic ; //tworzenie nowego interface tekstowego
+    private static GraphicConsole graphic ; //tworzenie nowego interface tekstowego
     private static KeyboardHundle keyboard;
 
     private static void initFields(){
@@ -84,7 +84,8 @@ public class Main {
     }
 
     private static void input(){
-
+        graphic.draw(gameField);
+        direction = graphic.getKeyPressed();
     }
 
     private static void logic(){
@@ -204,10 +205,11 @@ public class Main {
     public static void main(String[] args) {
         initFields(); // tworzenie nowego pola
         createInitialCell(); // tworzenie nowych punktów pola
-
+        //graphic.draw(gameField);
         while(!endGame){
-            //input();
-            //logic();
+            graphic.draw(gameField);
+            input();
+            logic();
             graphic.draw(gameField);
         }
 

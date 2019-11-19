@@ -13,7 +13,7 @@ public class KeyboardHundleConsole implements KeyboardHundle {
 
     @Override
     public void update() {
-        lastKeyPressed = Direction.WAITING;
+//        lastKeyPressed = Direction.WAITING;
 
     }
 }
