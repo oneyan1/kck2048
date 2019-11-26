@@ -45,7 +45,7 @@ public class Main {
         score = 0;
         endGame = false;
         graphic = new GraphicConsole();
-        keyboard = new KeyboardHundleConsole();
+        //keyboard = new KeyboardHundleConsole();
         gameField = new Field();
 
     }
@@ -65,17 +65,23 @@ public class Main {
         //System.out.println(randomX+ " "+ randomY);
         int currentX = randomX, currentY = randomY;
         while(!placed){
-            if(gameField.getStateCell(randomX, randomY) == 0){
-                gameField.setStateCell(randomX,randomY,state);
+            if(gameField.getStateCell(currentX, currentY) == 0){
+                gameField.setStateCell(currentX,currentY,state);
                 placed = true;
             }else{
-                if(currentX+1 < COUNT_CELL_X) currentX++;
+                if(currentX+1 < COUNT_CELL_X) {
+                    currentX++;
+                }
                 else{
                     currentX = 0;
-                    if(currentY+1 < COUNT_CELL_Y) currentY++;
-                    else currentY = 0;
+                    if(currentY+1 < COUNT_CELL_Y){
+                        currentY++;
+                    }
+                    else{
+                        currentY = 0;
+                    }
                 }
-                if(currentX == randomX && currentY == randomY){
+                if((currentX == randomX) && (currentY == randomY)){
                     System.err.println("Failed create new cell");
                     System.exit(-1);
                 }
@@ -87,9 +93,8 @@ public class Main {
     }
 
     private static void input(){
-        graphic.draw(gameField);
+        //graphic.draw(gameField);
         direction = graphic.getKeyPressed();
-        //direction = keyboard.update(key);
     }
 
     private static void logic(){
@@ -209,14 +214,14 @@ public class Main {
     public static void main(String[] args) {
         initFields(); // tworzenie nowego pola
         createInitialCell(); // tworzenie nowych punktów pola
-        //graphic.draw(gameField);
+        graphic.mainMenu(gameField);
+        endGame = graphic.getCloseGame();
         while(!endGame){
             graphic.draw(gameField);
             input();
             logic();
-            graphic.draw(gameField);
+            System.out.println("Score: " + score);
         }
 
     }
-
 }
