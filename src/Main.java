@@ -41,6 +41,9 @@ public class Main {
     private static GraphicConsole graphic ; //tworzenie nowego interface tekstowego
     private static KeyboardHundle keyboard;
 
+    /***
+     * Inicjalizuje pola niezbedne dla starta gry
+     */
     private static void initFields(){
         score = 0;
         endGame = false;
@@ -49,14 +52,20 @@ public class Main {
         gameField = new Field();
 
     }
-    //tworzy nowe komurki na starcie gry
+
+    /***
+     *Tworzy nowe komórki z na starcie gry i przy przesuwaniu columny albo wiersza
+     */
     private static void createInitialCell(){
         for (int i = 0; i < COUNT_INITAL_CELL ; i++) {
             generateNewCell();
         }
     }
 
-    /*generuje nowe liczby*/
+
+    /***
+     * Generowanie nowej liczby wraz ze współrzędnymi do jej umieszczenia na pole gry
+     */
     private static void generateNewCell(){
         int state = 2;  // pózniej dodac szanse wylosowania 4
         int randomX = new Random().nextInt(COUNT_CELL_X);
@@ -92,11 +101,16 @@ public class Main {
 
     }
 
+    /***
+     * Ustawia wartość przyciska ktory był wciśnięty przez użytkownika
+     */
     private static void input(){
-        //graphic.draw(gameField);
         direction = graphic.getKeyPressed();
     }
 
+    /***
+     * Wywoluje generowanie nowego punktu jezeli był wciśnienty przycisk
+     */
     private static void logic(){
         if(direction!=WAITING){
             if(shift(direction)) generateNewCell();
@@ -104,6 +118,16 @@ public class Main {
         }
     }
 
+    /***
+     * Przesuwa i zlicza komurki:
+     * 1. Jezeli w werszu/kolumnie są 0, usuwa ich;
+     * 2. Jezeli dwe komurki mają taką samą wartość, to sumuje ich
+     * 3. Jezeli komurka nowoutrwożona to nie może być sumowane
+     * 4. Sprawdzanie liczb idzie od 0-wego indeksu k ostatniemu
+     *
+     * @param oldRow wiersz/kolumna w przedsawenu tablicy jednowymiarowej komurki której trzeba przesunuć
+     * @return true w przypadku gdy przesuwanie zostało wykonane
+     */
     private static ShiftRowResult shiftRow(int[] oldRow){
         ShiftRowResult returnArray = new ShiftRowResult();
 
@@ -144,6 +168,13 @@ public class Main {
         return returnArray;
     }
 
+    /***
+     * Przesuwa wszystkie komurki we wskazanym kierunku, wywyoluja shiftRow() dla każdego
+     * wiersza/kolumny w zalezności od wskazanego kierunku
+     *
+     * @param direction kirunek w ktorem trzeba przesunuć wiersz/kolumne
+     * @return zwraza true w przypadku gdy przesuwanie się udało
+     */
     private static boolean shift(Direction direction){
         boolean shift = false;
         switch(direction){
