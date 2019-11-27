@@ -12,6 +12,5 @@ public class KeyboardHundleConsole implements KeyboardHundle {
     public void update(Key key) {
         keyPressed = Direction.WAITING;
 
-
     }
 }

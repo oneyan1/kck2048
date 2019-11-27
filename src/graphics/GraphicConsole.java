@@ -5,9 +5,7 @@ import com.googlecode.lanterna.gui.*;
 import com.googlecode.lanterna.gui.Action;
 import com.googlecode.lanterna.gui.Component.Alignment;
 import com.googlecode.lanterna.gui.Window;
-import com.googlecode.lanterna.gui.component.Button;
-import com.googlecode.lanterna.gui.component.EmptySpace;
-import com.googlecode.lanterna.gui.component.Panel;
+import com.googlecode.lanterna.gui.component.*;
 import com.googlecode.lanterna.gui.component.Panel.Orientation;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 import com.googlecode.lanterna.gui.layout.VerticalLayout;
@@ -17,18 +15,42 @@ import com.googlecode.lanterna.terminal.TerminalSize;
 import logic.Direction;
 import logic.Field;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+/**
+ * Implementacja interfejsa tekstowego
+ */
 public class GraphicConsole implements Graphic {
 
+    /**
+     * Tworzenia nowego okna terminala
+     */
     private final GUIScreen guiScreen = TerminalFacade.createGUIScreen();
+    /**
+     * Objekt kierunku przyciska
+     */
     private Direction keyPressed;
+    /**
+     * Wskaznik na zakończenie gry
+     */
     private boolean closeGame = false;
 
+    /**
+     * @return zwraca wskaznik na zakończenia gry
+     */
     public boolean getCloseGame(){
         return closeGame;
     }
+
+    /**
+     *  Tworzenie i rysowanie pola gry, ustawienie obekta keyPressed
+     *  na kierunek przycisku
+     * @param field obiekt pola gry
+     */
     @Override
-    public void draw(Field field){
+    public void draw(Field field, int score){
 
         guiScreen.getScreen().startScreen();
         //segment rysujący kwadrat pola
@@ -53,7 +75,7 @@ public class GraphicConsole implements Graphic {
                     }
                 }
         }
-
+        guiScreen.getScreen().putString(10,5,"Score: " + Integer.toString(score), Terminal.Color.BLACK, Terminal.Color.WHITE);
 
         guiScreen.getScreen().refresh();
         boolean keepRunning = true;
@@ -86,7 +108,7 @@ public class GraphicConsole implements Graphic {
                     break;
                 case Escape:
                     guiScreen.getScreen().stopScreen();
-                    mainMenu(field);
+                    mainMenu(field, score);
                     System.exit(0);
                     break;
             }
@@ -94,11 +116,19 @@ public class GraphicConsole implements Graphic {
 
     }
 
+    /**
+     * @return zwraca obiekt kierunku przycisku
+     */
     public Direction getKeyPressed() {
         return keyPressed;
     }
 
-    public void mainMenu(Field field){
+    /**
+     * Tworzy menu gry
+     * @param field obuekt pola gry\
+     * @param score liczba punktów zdobyta w trakcie gry
+     */
+    public void mainMenu(Field field, int score){
         final Window window = new Window("2048");
         window.setWindowSizeOverride(new TerminalSize(20,10));
         window.setSoloWindow(true);
@@ -108,13 +138,60 @@ public class GraphicConsole implements Graphic {
             @Override
             public void doAction() {
                 window.close();
+                closeGame = false;
                 guiScreen.getScreen().stopScreen();
-                draw(field);
+                draw(field, score);
             }
         });
         newGameBtn.setAlignment(Alignment.CENTER);
         menuPanel.addComponent(newGameBtn, LinearLayout.GROWS_HORIZONTALLY);
 
+        final Window scoreWindow = new Window("Score");
+        Button scoreBtn = new Button("Score", new Action() {
+            @Override
+            public void doAction() {
+                scoreWindow.setWindowSizeOverride(new TerminalSize(30,10));
+                scoreWindow.setSoloWindow(true);
+                File file = new File("score.txt");
+                String scoreRecord[] = new String[3];
+                Scanner scan;
+                try {
+                    scan = new Scanner(file);
+                    int i = 0;
+                    while(scan.hasNextLine()){
+                        scoreRecord[i] = scan.nextLine();
+                        i++;
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Panel scorePanel = new Panel("Score", Orientation.VERTICAL);
+                scorePanel.setLayoutManager(new VerticalLayout());
+                Table scoreTable = new Table(3);
+
+                Component[] col1 = new Component[3];
+                col1[0] = new Label(scoreRecord[0]);
+                col1[1] = new Label(scoreRecord[1]);
+                col1[2] = new Label(scoreRecord[2]);
+
+                scoreTable.addRow(col1);
+                scorePanel.addComponent(scoreTable);
+                Button combackBtn = new Button("Back", new Action() {
+                    @Override
+                    public void doAction() {
+                        scoreWindow.close();
+                        window.close();
+                        guiScreen.getScreen().stopScreen();
+                        mainMenu(field, score);
+                    }
+                });
+                scorePanel.addComponent(combackBtn);
+                scoreWindow.addComponent(scorePanel);
+                guiScreen.showWindow(scoreWindow, GUIScreen.Position.CENTER);
+            }
+        });
+        scoreBtn.setAlignment(Alignment.CENTER);
+        menuPanel.addComponent(scoreBtn, LinearLayout.GROWS_HORIZONTALLY);
 
         Button exitBtn = new Button("Exit", new Action() {
             @Override
