@@ -108,8 +108,8 @@ public class GraphicConsole implements Graphic {
                     break;
                 case Escape:
                     guiScreen.getScreen().stopScreen();
+                    keepRunning = false;
                     mainMenu(field, score);
-                    System.exit(0);
                     break;
             }
         }

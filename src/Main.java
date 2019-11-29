@@ -5,9 +5,7 @@ import keyboard.KeyboardHundle;
 import keyboard.KeyboardHundleConsole;
 import logic.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -52,6 +50,9 @@ public class Main {
      */
     private static KeyboardHundle keyboard;
 
+    /**
+     * Tablica rekordów z poprzednich gier
+     */
     private static int scoreRecords[];
 
     /***
@@ -274,15 +275,19 @@ public class Main {
      * Zapisywanie nowego recordu do pliku
      */
     private static void writeNewScoreRecords(){
-        File file = new File("score.txt");
-        try {
-            PrintWriter pw = new PrintWriter(file);
-            for (int i = 0; i < scoreRecords.length ; i++) {
-                if(scoreRecords[i] <= score){
-                    pw.println(Integer.toString(score));
+        try(final FileWriter writer = new FileWriter("score.txt", false)) {
+            for (int i = 0; i < scoreRecords.length; i++) {
+                System.out.println(scoreRecords[i]);
+                if (scoreRecords[i] <= score) {
+                    scoreRecords[i] = score;
                 }
             }
-        } catch (FileNotFoundException e) {
+            for (int i = 0; i < scoreRecords.length; i++) {
+                writer.write(Integer.toString(scoreRecords[i]));
+                writer.write(System.lineSeparator());
+
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -300,6 +305,7 @@ public class Main {
             logic();
             System.out.println("Score: " + score);
             System.out.println(Arrays.toString(scoreRecords));
+            endGame = graphic.getCloseGame();
         }
         writeNewScoreRecords();
     }
