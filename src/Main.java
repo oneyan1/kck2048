@@ -276,7 +276,7 @@ public class Main {
      */
     private static void writeNewScoreRecords(){
         try(final FileWriter writer = new FileWriter("score.txt", false)) {
-            for (int i = 0; i < scoreRecords.length; i++) {
+            for (int i = scoreRecords.length; i > 0; i--) {
                 System.out.println(scoreRecords[i]);
                 if (scoreRecords[i] <= score) {
                     scoreRecords[i] = score;
