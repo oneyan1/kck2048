@@ -1,8 +1,6 @@
-package graphics;
+package sorce.graphics;
 
-import logic.Field;
-
-import java.io.IOException;
+import sorce.logic.Field;
 
 /**
  * Interface dla tworzenia pola gry
@@ -10,5 +8,5 @@ import java.io.IOException;
 public interface Graphic {
     void draw(Field field, int score); // tworzenie pola gry
     void destroy(); //usuwanie pola
-
+    boolean isCloseRequested();
 }

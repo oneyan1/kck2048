@@ -1,4 +1,4 @@
-package logic;
+package sorce.logic;
 
 /**
  * Tym danych z kierunkiem przecisków

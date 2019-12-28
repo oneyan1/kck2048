@@ -1,6 +1,6 @@
-package logic;
+package sorce.logic;
 
-import static logic.Constant.*;
+import static sorce.logic.Constant.*;
 
 /***
  * Klasa reprezantująca pole gry

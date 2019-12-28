@@ -1,4 +1,4 @@
-package logic;
+package sorce.logic;
 
 /**
  * Zawiera konstaty niezbędne do tworzenia gry
@@ -17,5 +17,8 @@ public class Constant {
      */
     public static final int COUNT_INITAL_CELL = 2;
 
-
+    public static final int CELL_SIZE = 64;
+    public static final int SCREEN_WIDTH = COUNT_CELL_X * CELL_SIZE;
+    public static final int SCREEN_HEIGHT = COUNT_CELL_Y * CELL_SIZE;
+    public static final String SCREEN_NAME = "2048";
 }

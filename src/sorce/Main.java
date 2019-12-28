@@ -1,17 +1,18 @@
+package sorce;
 
-import graphics.Graphic;
-import graphics.GraphicConsole;
-import keyboard.KeyboardHundle;
-import keyboard.KeyboardHundleConsole;
-import logic.*;
+import sorce.graphics.Graphic;
+import sorce.logic.Constant;
+import sorce.logic.Direction;
+import sorce.logic.Field;
+import sorce.graphics.GraphicDesktop;
+import sorce.keyboard.KeyboardHundle;
+import sorce.keyboard.KeyboardHundleDesktop;
+import sorce.logic.*;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
-
-import static logic.Constant.*;
-import static logic.Direction.*;
 
 public class Main {
 
@@ -44,7 +45,7 @@ public class Main {
     /***
      * Obiekt interfajsu tekstowego
      */
-    private static GraphicConsole graphic;
+    private static Graphic graphic;
     /***
      * Obiekt klawiatury(w tej implementacji nie wykożystany)
      */
@@ -54,6 +55,7 @@ public class Main {
      * Tablica rekordów z poprzednich gier
      */
     private static int scoreRecords[];
+    private static boolean isThere2048;
 
     /***
      * Inicjalizuje pola niezbedne dla starta gry
@@ -62,18 +64,20 @@ public class Main {
         score = 0;
         scoreRecords = new int[3];
         endGame = false;
-        graphic = new GraphicConsole();
+        isThere2048 = false;
+        //graphic = new GraphicConsole();
+        graphic = new GraphicDesktop();
         //keyboard = new KeyboardHundleConsole();
+        keyboard = new KeyboardHundleDesktop();
         gameField = new Field();
         scoreRecords();
-
     }
 
     /***
      *Tworzy nowe komórki z na starcie gry i przy przesuwaniu columny albo wiersza
      */
     private static void createInitialCell() {
-        for (int i = 0; i < COUNT_INITAL_CELL; i++) {
+        for (int i = 0; i < Constant.COUNT_INITAL_CELL; i++) {
             generateNewCell();
         }
     }
@@ -84,8 +88,8 @@ public class Main {
      */
     private static void generateNewCell() {
         int state = 2;  // pózniej dodac szanse wylosowania 4
-        int randomX = new Random().nextInt(COUNT_CELL_X);
-        int randomY = new Random().nextInt(COUNT_CELL_Y);
+        int randomX = new Random().nextInt(Constant.COUNT_CELL_X);
+        int randomY = new Random().nextInt(Constant.COUNT_CELL_Y);
         boolean placed = false;
         int currentX = randomX, currentY = randomY;
         while (!placed) {
@@ -93,11 +97,11 @@ public class Main {
                 gameField.setStateCell(currentX, currentY, state);
                 placed = true;
             } else {
-                if (currentX + 1 < COUNT_CELL_X) {
+                if (currentX + 1 < Constant.COUNT_CELL_X) {
                     currentX++;
                 } else {
                     currentX = 0;
-                    if (currentY + 1 < COUNT_CELL_Y) {
+                    if (currentY + 1 < Constant.COUNT_CELL_Y) {
                         currentY++;
                     } else {
                         currentY = 0;
@@ -118,16 +122,19 @@ public class Main {
      * Ustawia wartość przyciska ktory był wciśnięty przez użytkownika
      */
     private static void input() {
-        direction = graphic.getKeyPressed();
+        //direction = graphic.getLastKeyPressed();
+        keyboard.update();
+        direction = keyboard.getLastKeyPressed();
+        endGame = endGame || graphic.isCloseRequested() || keyboard.getWasEscPressed();
     }
 
     /***
      * Wywoluje generowanie nowego punktu jezeli był wciśnienty przycisk
      */
     private static void logic() {
-        if (direction != WAITING) {
+        if (direction != Direction.WAITING) {
             if (shift(direction)) generateNewCell();
-            direction = WAITING;
+            direction = Direction.WAITING;
         }
     }
 
@@ -193,10 +200,10 @@ public class Main {
         switch (direction) {
             case UP:
             case DOWN:
-                for (int i = 0; i < COUNT_CELL_X; i++) {
+                for (int i = 0; i < Constant.COUNT_CELL_X; i++) {
                     int[] col = gameField.getColumn(i);
 
-                    if (direction == UP) {
+                    if (direction == Direction.UP) {
                         int[] tmp = new int[col.length];
                         for (int j = 0; j < tmp.length; j++) {
                             tmp[j] = col[tmp.length - j - 1];
@@ -205,7 +212,7 @@ public class Main {
                     }
                     ShiftRowResult result = shiftRow(col);
 
-                    if (direction == UP) {
+                    if (direction == Direction.UP) {
                         int[] tmp = new int[result.shiftedRow.length];
                         for (int j = 0; j < tmp.length; j++) {
                             tmp[j] = result.shiftedRow[tmp.length - j - 1];
@@ -219,10 +226,10 @@ public class Main {
 
             case LEFT:
             case RIGHT:
-                for (int i = 0; i < COUNT_CELL_Y; i++) {
+                for (int i = 0; i < Constant.COUNT_CELL_Y; i++) {
                     int[] row = gameField.getRow(i);
 
-                    if (direction == RIGHT) {
+                    if (direction == Direction.RIGHT) {
                         int[] tmp = new int[row.length];
                         for (int j = 0; j < tmp.length; j++) {
                             tmp[j] = row[tmp.length - j - 1];
@@ -231,7 +238,7 @@ public class Main {
                     }
                     ShiftRowResult result = shiftRow(row);
 
-                    if (direction == RIGHT) {
+                    if (direction == Direction.RIGHT) {
                         int[] tmp = new int[result.shiftedRow.length];
                         for (int j = 0; j < tmp.length; j++) {
                             tmp[j] = result.shiftedRow[tmp.length - j - 1];
@@ -276,7 +283,7 @@ public class Main {
      */
     private static void writeNewScoreRecords(){
         try(final FileWriter writer = new FileWriter("score.txt", false)) {
-            for (int i = scoreRecords.length; i > 0; i--) {
+            for (int i = scoreRecords.length; i <= 0; i--) {
                 System.out.println(scoreRecords[i]);
                 if (scoreRecords[i] <= score) {
                     scoreRecords[i] = score;
@@ -293,19 +300,24 @@ public class Main {
 
     }
 
+    private static void merged2048(){
+        endGame = true;
+        isThere2048 = true;
+    }
 
     public static void main(String[] args) {
         initFields(); // tworzenie nowego pola
         createInitialCell(); // tworzenie nowych punktów pola
-        graphic.mainMenu(gameField, score);
-        endGame = graphic.getCloseGame();
+        //graphic.mainMenu(gameField, score);
+        //endGame = graphic.getCloseGame();
         while (!endGame) {
-            graphic.draw(gameField, score);
+            //graphic.draw(gameField, score);
             input();
             logic();
+            graphic.draw(gameField, score);
             System.out.println("Score: " + score);
             System.out.println(Arrays.toString(scoreRecords));
-            endGame = graphic.getCloseGame();
+            //endGame = graphic.getCloseGame();
         }
         writeNewScoreRecords();
     }
