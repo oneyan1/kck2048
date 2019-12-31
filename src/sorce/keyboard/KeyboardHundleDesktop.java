@@ -6,6 +6,7 @@ import sorce.logic.Direction;
 public class KeyboardHundleDesktop implements KeyboardHundle{
 
     private boolean wasEscPressed;
+    private int newGame;
     private Direction lastKeyPressed;
 
      private void resetValue(){
@@ -20,7 +21,9 @@ public class KeyboardHundleDesktop implements KeyboardHundle{
             if(Keyboard.getEventKeyState()){
                 switch(Keyboard.getEventKey()){
                     case Keyboard.KEY_ESCAPE:
-                        wasEscPressed = true;
+                        if(newGame == 0){
+                            wasEscPressed = true;
+                        }else newGame = 0;
                         break;
                     case Keyboard.KEY_UP:
                         lastKeyPressed = Direction.UP;
@@ -33,6 +36,12 @@ public class KeyboardHundleDesktop implements KeyboardHundle{
                         break;
                     case Keyboard.KEY_RIGHT:
                         lastKeyPressed = Direction.RIGHT;
+                        break;
+                    case Keyboard.KEY_RETURN:
+                        newGame = 1;
+                        break;
+                    case Keyboard.KEY_S:
+                        newGame = 2;
                         break;
                     default:
                 }
@@ -47,4 +56,6 @@ public class KeyboardHundleDesktop implements KeyboardHundle{
     public boolean getWasEscPressed(){
          return wasEscPressed;
     }
+
+    public int getNewGame(){ return newGame; }
 }

@@ -10,4 +10,5 @@ public interface KeyboardHundle {
     void update(); //czytanie posczegolnych wcisnienc klawisza
     Direction getLastKeyPressed();
     boolean getWasEscPressed();
+    int getNewGame();
 }

@@ -57,6 +57,7 @@ public class Main {
     private static int scoreRecords[];
     private static boolean isThere2048;
 
+    private static int newGame;
     /***
      * Inicjalizuje pola niezbedne dla starta gry
      */
@@ -71,6 +72,7 @@ public class Main {
         keyboard = new KeyboardHundleDesktop();
         gameField = new Field();
         scoreRecords();
+        newGame = 0;
     }
 
     /***
@@ -122,8 +124,8 @@ public class Main {
      * Ustawia wartość przyciska ktory był wciśnięty przez użytkownika
      */
     private static void input() {
-        //direction = graphic.getLastKeyPressed();
         keyboard.update();
+        newGame = keyboard.getNewGame();
         direction = keyboard.getLastKeyPressed();
         endGame = endGame || graphic.isCloseRequested() || keyboard.getWasEscPressed();
     }
@@ -314,9 +316,9 @@ public class Main {
             //graphic.draw(gameField, score);
             input();
             logic();
-            graphic.draw(gameField, score);
-            System.out.println("Score: " + score);
-            System.out.println(Arrays.toString(scoreRecords));
+            graphic.draw(gameField, score, newGame);
+            //System.out.println("Score: " + score);
+            //System.out.println(Arrays.toString(scoreRecords));
             //endGame = graphic.getCloseGame();
         }
         writeNewScoreRecords();
